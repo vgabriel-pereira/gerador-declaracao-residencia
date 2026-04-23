@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerador de Autodeclaração de Residência - Gratuito e Seguro">
+    <title>Gerador de Autodeclaração de Residência</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📋 Gerador de Autodeclaração de Residência</h1>
+            <p class="subtitle">Preencha seus dados e gere sua declaração em PDF de forma rápida e segura</p>
+            <div class="privacy-note">
+                🔒 Seus dados não são enviados para nenhum servidor - tudo funciona no seu navegador
+            </div>
+        </header>
+
+        <main class="main-content">
+            <form id="declaracaoForm" class="form">
+                <!-- Dados Pessoais -->
+                <section class="form-section">
+                    <h2 class="section-title">Dados Pessoais</h2>
+                    
+                    <div class="form-group">
+                        <label for="nomeCompleto">Nome Completo *</label>
+                        <input 
+                            type="text" 
+                            id="nomeCompleto" 
+                            name="nomeCompleto" 
+                            class="form-input"
+                            placeholder="Ex: João da Silva Santos"
+                            required
+                            autocomplete="name"
+                        >
+                        <span class="error-message" id="nomeCompletoError"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cpf">CPF *</label>
+                            <input 
+                                type="text" 
+                                id="cpf" 
+                                name="cpf" 
+                                class="form-input"
+                                placeholder="000.000.000-00"
+                                maxlength="14"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="cpfError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rg">RG *</label>
+                            <input 
+                                type="text" 
+                                id="rg" 
+                                name="rg" 
+                                class="form-input"
+                                placeholder="Ex: 123.456"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="rgError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="orgaoExpedidor">Órgão Expedidor *</label>
+                            <input 
+                                type="text" 
+                                id="orgaoExpedidor" 
+                                name="orgaoExpedidor" 
+                                class="form-input"
+                                placeholder="Ex: SSP/DF"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="orgaoExpedidorError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nacionalidade">Nacionalidade *</label>
+                            <input 
+                                type="text" 
+                                id="nacionalidade" 
+                                name="nacionalidade" 
+                                class="form-input"
+                                value="brasileiro"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="nacionalidadeError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profissao">Profissão *</label>
+                            <input 
+                                type="text" 
+                                id="profissao" 
+                                name="profissao" 
+                                class="form-input"
+                                placeholder="Ex: Representante Comercial"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="profissaoError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estadoCivil">Estado Civil *</label>
+                            <select id="estadoCivil" name="estadoCivil" class="form-input" required>
+                                <option value="">Selecione...</option>
+                                <option value="solteiro">Solteiro(a)</option>
+                                <option value="casado">Casado(a)</option>
+                                <option value="divorciado">Divorciado(a)</option>
+                                <option value="viúvo">Viúvo(a)</option>
+                                <option value="união estável">União Estável</option>
+                            </select>
+                            <span class="error-message" id="estadoCivilError"></span>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- Endereço -->
+                <section class="form-section">
+                    <h2 class="section-title">Endereço</h2>
+                    
+                    <div class="form-group">
+                        <label for="cep">CEP *</label>
+                        <div class="input-with-button">
+                            <input 
+                                type="text" 
+                                id="cep" 
+                                name="cep" 
+                                class="form-input"
+                                placeholder="00000-000"
+                                maxlength="9"
+                                required
+                                autocomplete="postal-code"
+                            >
+                            <button type="button" id="buscarCepBtn" class="btn-secondary">
+                                <span class="btn-text">Buscar</span>
+                                <span class="spinner hidden" id="cepSpinner"></span>
+                            </button>
+                        </div>
+                        <span class="error-message" id="cepError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="logradouro">Logradouro *</label>
+                        <input 
+                            type="text" 
+                            id="logradouro" 
+                            name="logradouro" 
+                            class="form-input"
+                            placeholder="Ex: Q.I. 33, Bloco A, Sala 203, Ed. Pedro Teixeira"
+                            required
+                            autocomplete="street-address"
+                        >
+                        <span class="error-message" id="logradouroError"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bairro">Bairro *</label>
+                            <input 
+                                type="text" 
+                                id="bairro" 
+                                name="bairro" 
+                                class="form-input"
+                                placeholder="Ex: Guará II"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="bairroError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+                            <input 
+                                type="text" 
+                                id="numero" 
+                                name="numero" 
+                                class="form-input"
+                                placeholder="Ex: 123"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cidade">Cidade *</label>
+                            <input 
+                                type="text" 
+                                id="cidade" 
+                                name="cidade" 
+                                class="form-input"
+                                placeholder="Ex: Brasília"
+                                required
+                                autocomplete="address-level2"
+                            >
+                            <span class="error-message" id="cidadeError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado">Estado *</label>
+                            <select id="estado" name="estado" class="form-input" required>
+                                <option value="">Selecione...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                            <span class="error-message" id="estadoError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="complemento">Complemento</label>
+                        <input 
+                            type="text" 
+                            id="complemento" 
+                            name="complemento" 
+                            class="form-input"
+                            placeholder="Ex: Apt 101, Bloco B"
+                            autocomplete="off"
+                        >
+                    </div>
+                </section>
+
+                <!-- Data e Local -->
+                <section class="form-section">
+                    <h2 class="section-title">Data e Local da Declaração</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dataDeclaracao">Data *</label>
+                            <input 
+                                type="date" 
+                                id="dataDeclaracao" 
+                                name="dataDeclaracao" 
+                                class="form-input"
+                                required
+                            >
+                            <span class="error-message" id="dataDeclaracaoError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="localDeclaracao">Local *</label>
+                            <input 
+                                type="text" 
+                                id="localDeclaracao" 
+                                name="localDeclaracao" 
+                                class="form-input"
+                                placeholder="Ex: Brasília/DF"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="error-message" id="localDeclaracaoError"></span>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Botões de Ação -->
+                <div class="form-actions">
+                    <button type="button" id="previewBtn" class="btn-secondary" disabled>
+                        👁️ Visualizar Prévia
+                    </button>
+                    <button type="button" id="saveDataBtn" class="btn-secondary">
+                        💾 Salvar Dados
+                    </button>
+                    <button type="button" id="clearDataBtn" class="btn-secondary">
+                        🗑️ Limpar Dados
+                    </button>
+                    <button type="submit" id="generatePdfBtn" class="btn-primary" disabled>
+                        📄 Gerar PDF
+                    </button>
+                </div>
+            </form>
+        </main>
+
+        <!-- Modal de Prévia -->
+        <div id="previewModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Prévia da Declaração</h2>
+                    <button type="button" id="closePreviewBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body" id="previewContent"></div>
+                <div class="modal-footer">
+                    <button type="button" id="closePreviewFooterBtn" class="btn-secondary">Fechar</button>
+                    <button type="button" id="generateFromPreviewBtn" class="btn-primary">Gerar PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p><strong>⚠️ Informações Importantes:</strong></p>
+                <ul class="footer-list">
+                    <li>Esta declaração possui valor declaratório, mas não substitui documentos oficiais</li>
+                    <li>A validação de CPF verifica apenas o formato, não a autenticidade</li>
+                    <li>A assinatura digital não possui certificação ICP-Brasil</li>
+                    <li>Todos os dados são processados localmente no seu navegador</li>
+                    <li>Lei nº 7.115/1983 e art. 299 do Código Penal Brasileiro aplicam-se a declarações falsas</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/validators.js"></script>
+    <script src="js/cep.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/signature.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
